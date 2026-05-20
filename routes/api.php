@@ -179,3 +179,13 @@ Route::get('/install-database', function () {
         return "Erreur : " . $e->getMessage();
     }
 });
+
+Route::get('/create-storage-link', function () {
+    $target = storage_path('app/public');
+    $shortcut = public_path('storage');
+    if (file_exists($shortcut)) {
+        return "Le lien existe déjà.";
+    }
+    symlink($target, $shortcut);
+    return "Lien de stockage créé avec succès !";
+});
