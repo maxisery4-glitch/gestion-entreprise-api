@@ -169,3 +169,13 @@ Route::post('/admin/attribuer-prime', function (Request $request) { DB::table('p
 Route::get('/admin/primes/user/{id}', function ($id) { return response()->json(DB::table('primes')->where('user_id', $id)->orderBy('created_at','desc')->get()); });
 Route::put('/admin/primes/{id}', function (Request $request, $id) { DB::table('primes')->where('id', $id)->update($request->only('montant')); return response()->json(['ok' => true]); });
 Route::delete('/admin/primes/{id}', function ($id) { DB::table('primes')->where('id', $id)->delete(); return response()->json(['ok' => true]); });
+
+// Route temporaire pour créer les tables sur le serveur
+Route::get('/install-database', function () {
+    try {
+        \Illuminate\Support\Facades\Artisan::call('migrate:fresh');
+        return "Base de données installée avec succès !";
+    } catch (\Exception $e) {
+        return "Erreur : " . $e->getMessage();
+    }
+});
