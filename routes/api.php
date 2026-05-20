@@ -189,3 +189,10 @@ Route::get('/create-storage-link', function () {
     symlink($target, $shortcut);
     return "Lien de stockage créé avec succès !";
 });
+
+Route::get('/clear-cache', function() {
+    \Artisan::call('route:clear');
+    \Artisan::call('config:clear');
+    \Artisan::call('cache:clear');
+    return "Cache nettoyé !";
+});
